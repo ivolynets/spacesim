@@ -55,7 +55,27 @@ export class Spacecraft extends CelestialBody {
     }
 
     /**
-     * A velocity of the spacecraft in meters per second.
+     * A mass of the body in kilograms. If this spacecraft has a payload, then the mass of payload is added to the 
+     * total mass of this spacecraft.
+     * @override
+     */
+    get mass() {
+        return this.#payload !== null ? this.#payload.mass + this.#mass : this.#mass;
+    }
+
+    /**
+     * A distance in meters between centers of mass of this celestial body and the primary (orbited) body. If this 
+     * spacecraft has a carrier, then the distance from this spacecraft is the same as the distance from its carrier.
+     * @override
+     * @see {@link primary} for the primary body.
+     */
+    get distance() {
+        return this.#carrier !== null ? this.#carrier.distance : this.#distance;
+    }
+
+    /**
+     * A velocity of the spacecraft in meters per second. If this spacecraft has a carrier, then the velocity of this 
+     * spacecraft is the same as the velocity of its carrier.
      */
     get velocity() {
         return this.#carrier !== null ? this.#carrier.velocity : this.#velocity;

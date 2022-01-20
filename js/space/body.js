@@ -11,18 +11,13 @@ export class CelestialBody {
     #mass;
 
     /**
-     * The standard gravitational parameter of the body.
-     */
-    #gm;
-
-    /**
      * A primary body being orbited by this celestial body.
      */
     #primary;
 
-     /**
-      * A distance in meters between centers of mass of this celestial body and the primary (orbited) body.
-      */
+    /**
+     * A distance in meters between centers of mass of this celestial body and the primary (orbited) body.
+     */
     #distance;
 
     /**
@@ -43,7 +38,6 @@ export class CelestialBody {
         if (typeof primary !== "undefined" && typeof distance !== "number") throw new ReferenceError("Distance must be a defined number");
         
         this.#mass = mass;
-        this.#gm = G * mass;
         this.#primary = primary;
         this.#distance = distance;
     }
@@ -53,13 +47,6 @@ export class CelestialBody {
      */
     get mass() {
         return this.#mass;
-    }
-
-    /**
-     * The standard gravitational parameter of the body.
-     */
-    get GM() {
-        return this.#gm;
     }
 
     /**
@@ -79,12 +66,19 @@ export class CelestialBody {
     }
 
     /**
+     * The standard gravitational parameter of the body.
+     */
+    get GM() {
+        return G * this.mass;
+    }
+
+    /**
      * Gravitational acceleration at a specified distance from the center of the body (m/s^2).
      */
     g(distance) {
         if (distance === null) throw new ReferenceError("Distance cannot be null");
         if (typeof distance !== "number") throw new TypeError("Distance must be a number");
-        return G * this.mass / distance ** 2;
+        return this.GM / distance ** 2;
     }
 
 }

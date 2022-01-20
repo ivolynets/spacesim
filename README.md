@@ -1,2 +1,2 @@
-# spacesim
+# SpaceSim
 Simplified spaceflight simulation.

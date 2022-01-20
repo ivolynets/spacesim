@@ -6,6 +6,11 @@
 export const G = 6.67259e-11;
 
 /**
+ * The constant represents the full length of the unit circle (2π).
+ */
+const DOUBLE_PI = 2 * Math.PI;
+
+/**
  * The constant represents a number of radians in one degree.
  */
 const DEGREE_RADIANS = Math.PI / 180;
@@ -23,8 +28,8 @@ export class Angle {
     /**
      * Creates a geometric angle using its degrees value.
      * 
-     * @param {number} degrees a value of the angle in degrees. If the angle is less than -360° or greater than 360°, 
-     * then it will be normalized internally to the value between -360° and 360°.
+     * @param {number} degrees a value of the angle in degrees. If the angle is less than 0° or greater than 259°, 
+     * then it will be normalized internally to the value between 0° and 259°.
      * @returns {Angle} an instance of the angle.
      */
     static fromDegrees(degrees) {
@@ -38,15 +43,17 @@ export class Angle {
     /**
      * Creates a geometric angle using its radians value.
      * 
-     * @param {number} radians a value of the angle in radians. If the angle is less than -2π or greater than 2π, then 
-     * it will be normalized internally to the value between -2π and 2π.
+     * @param {number} radians a value of the angle in radians. If the angle is less than 0 or greater than or equals 
+     * to 2π, then it will be normalized internally to the value between 0 and 2π.
      */
     constructor(radians) {
 
         if (radians === null) throw new ReferenceError("Angle cannot be null");
         if (typeof radians !== "number") throw new TypeError("Angle must be a number");
 
-        this.#value = radians % (2 * Math.PI); // normalize
+        // normalize the value between 0 and 2π
+        const normalized = radians % DOUBLE_PI;
+        this.#value = normalized < 0 ? DOUBLE_PI - normalized : normalized; 
     }
 
     /**
